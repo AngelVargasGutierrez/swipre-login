@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  body { margin:0; background:#1e1e1e; font-family:'Cascadia Code','Consolas',monospace; }
+  .titlebar { background:#323233; color:#ccc; padding:8px 14px; font-size:13px; border-bottom:1px solid #000; }
+  .term { padding:20px 24px; color:#d4d4d4; font-size:14px; line-height:1.55; white-space:pre-wrap; width:900px; }
+  .cmd { color:#9cdcfe; }
+  .prompt { color:#6a9955; }
+  .run { color:#fff; background:#0451a5; padding:1px 6px; border-radius:3px; font-weight:bold; }
+  .pass { color:#4ec9b0; font-weight:bold; }
+  .file { color:#dcdcaa; }
+  .desc { color:#ce9178; }
+  .summary { color:#569cd6; font-weight:bold; }
+  .ok { color:#4ec9b0; font-weight:bold; }
+</style>
+</head>
+<body>
+<div class="titlebar">swipre-login — npm test</div>
+<div class="term">
+<span class="prompt">PS D:\...\swipre-login&gt;</span> <span class="cmd">npm test</span>
+
+<span class="run"> RUN </span> v2.1.9 D:/10MO/CSWII/CASOS DE PRUEBA/SEMANA 4/swipre-login
+
+<span class="pass"> ✓</span> <span class="file">tests/login.test.js</span> &gt; <span class="desc">CP-01-01 - Inicio de sesión exitoso por rol (Flujo Normal / Éxito)</span> &gt; permite iniciar sesión al Administrador y le asigna el menú completo
+<span class="pass"> ✓</span> <span class="file">tests/login.test.js</span> &gt; <span class="desc">CP-01-01 - Inicio de sesión exitoso por rol (Flujo Normal / Éxito)</span> &gt; permite iniciar sesión a Jefatura de Farmacia y le asigna su menú
+<span class="pass"> ✓</span> <span class="file">tests/login.test.js</span> &gt; <span class="desc">CP-01-01 - Inicio de sesión exitoso por rol (Flujo Normal / Éxito)</span> &gt; permite iniciar sesión a Caja Farmacia y le asigna su menú
+<span class="pass"> ✓</span> <span class="file">tests/login.test.js</span> &gt; <span class="desc">CP-01-01 - Inicio de sesión exitoso por rol (Flujo Normal / Éxito)</span> &gt; permite iniciar sesión a Logística y le asigna su menú
+<span class="pass"> ✓</span> <span class="file">tests/login.test.js</span> &gt; <span class="desc">CP-01-02 - Rechazo de acceso con credenciales inválidas (Flujo Normal / Error, Prueba Unitaria)</span> &gt; rechaza el login cuando la contraseña es incorrecta
+<span class="pass"> ✓</span> <span class="file">tests/login.test.js</span> &gt; <span class="desc">CP-01-02 - Rechazo de acceso con credenciales inválidas (Flujo Normal / Error, Prueba Unitaria)</span> &gt; rechaza el login cuando el usuario no existe
+<span class="pass"> ✓</span> <span class="file">tests/login.test.js</span> &gt; <span class="desc">CP-01-02 - Rechazo de acceso con credenciales inválidas (Flujo Normal / Error, Prueba Unitaria)</span> &gt; rechaza el login cuando la cuenta está deshabilitada (estado Inactivo)
+<span class="pass"> ✓</span> <span class="file">tests/login.test.js</span> &gt; <span class="desc">Hallazgo detectado al ejecutar CP-01-01 (Flujo Alterno 2: Usuario Inactivo)</span> &gt; [HALLAZGO] la ficha espera un mensaje distinto para cuentas inactivas, pero el backend actual usa el mismo mensaje genérico que para credenciales inválidas
+
+<span class="summary"> Test Files</span>  <span class="ok">1 passed</span> (1)
+<span class="summary">      Tests</span>  <span class="ok">8 passed</span> (8)
+<span class="summary">   Start at</span>  22:05:19
+<span class="summary">   Duration</span>  673ms (transform 53ms, setup 0ms, collect 59ms, tests 4ms, environment 0ms, prepare 217ms)
+</div>
+</body>
+</html>
