@@ -23,4 +23,11 @@ app.get('/api/usuarios', (req, res) => {
 });
 
 const PORT = process.env.PORT || 3012;
-app.listen(PORT, () => console.log(`swipre-login escuchando en http://localhost:${PORT}`));
+// Solo escucha en un puerto real si se ejecuta directamente (node server.js).
+// Si se importa (p.ej. desde las pruebas de Supertest), no abre el puerto: Supertest
+// levanta su propio servidor efimero a partir del objeto `app`.
+if (import.meta.url === `file://${process.argv[1].replace(/\\/g, '/')}`) {
+  app.listen(PORT, () => console.log(`swipre-login escuchando en http://localhost:${PORT}`));
+}
+
+export { app };
