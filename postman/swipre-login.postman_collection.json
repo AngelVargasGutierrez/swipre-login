@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "swipre-login (RF-001 Iniciar sesion)",
-    "description": "Coleccion Postman para RF-001. CP-01-01 (exito, 4 roles) y CP-01-02 (error: contraseña incorrecta, usuario inexistente, cuenta deshabilitada).",
+    "description": "Coleccion Postman para RF-001. CP-01-01 (exito, 4 roles), CP-01-02 (error: contraseña incorrecta, usuario inexistente, cuenta deshabilitada) y CP-01-03 (acceso controlado por rol, HTTP 403 en servidor).",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "item": [
@@ -135,6 +135,42 @@
             "pm.test('Status 401 Unauthorized', () => pm.response.to.have.status(401));",
             "const body = pm.response.json();",
             "pm.test('[HALLAZGO] backend usa mensaje generico, no el especifico de cuenta inactiva de la ficha CP-01-01', () => pm.expect(body.error).to.eql('Credenciales incorrectas'));"
+          ]
+        }
+      }]
+    },
+    {
+      "name": "CP-01-03 - Acceso permitido a Gestión de Usuarios (rol Administrador)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "x-user-role", "value": "admin" }],
+        "url": "{{base_url}}/api/usuarios"
+      },
+      "event": [{
+        "listen": "test",
+        "script": {
+          "exec": [
+            "pm.test('Status 200 OK', () => pm.response.to.have.status(200));",
+            "const body = pm.response.json();",
+            "pm.test('Modulo correcto', () => pm.expect(body.modulo).to.eql('Gestión de Usuarios'));"
+          ]
+        }
+      }]
+    },
+    {
+      "name": "CP-01-03 - Acceso denegado a Gestión de Usuarios (rol Caja Farmacia)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "x-user-role", "value": "farmacia" }],
+        "url": "{{base_url}}/api/usuarios"
+      },
+      "event": [{
+        "listen": "test",
+        "script": {
+          "exec": [
+            "pm.test('Status 403 Forbidden (bloqueo a nivel de servidor)', () => pm.response.to.have.status(403));",
+            "const body = pm.response.json();",
+            "pm.test('Mensaje de error correcto', () => pm.expect(body.error).to.eql('No tienes permiso para acceder a este módulo.'));"
           ]
         }
       }]
