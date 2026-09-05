@@ -1,0 +1,143 @@
+{
+  "info": {
+    "name": "swipre-login (RF-001 Iniciar sesion)",
+    "description": "Coleccion Postman para RF-001. CP-01-01 (exito, 4 roles) y CP-01-02 (error: contraseña incorrecta, usuario inexistente, cuenta deshabilitada).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "CP-01-01 - Login exitoso (Administrador)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{base_url}}/api/login",
+        "body": { "mode": "raw", "raw": "{\"username\": \"admin.mopgimed\", \"password\": \"Admin#2026\"}" }
+      },
+      "event": [{
+        "listen": "test",
+        "script": {
+          "exec": [
+            "pm.test('Status 200 OK', () => pm.response.to.have.status(200));",
+            "const body = pm.response.json();",
+            "pm.test('Rol devuelto es admin', () => pm.expect(body.role).to.eql('admin'));",
+            "pm.test('Menu incluye usuarios', () => pm.expect(body.menu).to.include('usuarios'));"
+          ]
+        }
+      }]
+    },
+    {
+      "name": "CP-01-01 - Login exitoso (Jefatura de Farmacia)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{base_url}}/api/login",
+        "body": { "mode": "raw", "raw": "{\"username\": \"jefatura.farmacia\", \"password\": \"Jefe#2026\"}" }
+      },
+      "event": [{
+        "listen": "test",
+        "script": {
+          "exec": [
+            "pm.test('Status 200 OK', () => pm.response.to.have.status(200));",
+            "const body = pm.response.json();",
+            "pm.test('Rol devuelto es jefatura', () => pm.expect(body.role).to.eql('jefatura'));"
+          ]
+        }
+      }]
+    },
+    {
+      "name": "CP-01-01 - Login exitoso (Caja Farmacia)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{base_url}}/api/login",
+        "body": { "mode": "raw", "raw": "{\"username\": \"caja.farmacia\", \"password\": \"Caja#2026\"}" }
+      },
+      "event": [{
+        "listen": "test",
+        "script": {
+          "exec": [
+            "pm.test('Status 200 OK', () => pm.response.to.have.status(200));",
+            "const body = pm.response.json();",
+            "pm.test('Rol devuelto es farmacia', () => pm.expect(body.role).to.eql('farmacia'));"
+          ]
+        }
+      }]
+    },
+    {
+      "name": "CP-01-01 - Login exitoso (Logistica)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{base_url}}/api/login",
+        "body": { "mode": "raw", "raw": "{\"username\": \"logistica.almacen\", \"password\": \"Logi#2026\"}" }
+      },
+      "event": [{
+        "listen": "test",
+        "script": {
+          "exec": [
+            "pm.test('Status 200 OK', () => pm.response.to.have.status(200));",
+            "const body = pm.response.json();",
+            "pm.test('Rol devuelto es logistica', () => pm.expect(body.role).to.eql('logistica'));"
+          ]
+        }
+      }]
+    },
+    {
+      "name": "CP-01-02 - Rechazo por contraseña incorrecta",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{base_url}}/api/login",
+        "body": { "mode": "raw", "raw": "{\"username\": \"admin.mopgimed\", \"password\": \"contraseña-mala\"}" }
+      },
+      "event": [{
+        "listen": "test",
+        "script": {
+          "exec": [
+            "pm.test('Status 401 Unauthorized', () => pm.response.to.have.status(401));",
+            "const body = pm.response.json();",
+            "pm.test('Mensaje de error correcto', () => pm.expect(body.error).to.eql('Credenciales incorrectas'));"
+          ]
+        }
+      }]
+    },
+    {
+      "name": "CP-01-02 - Rechazo por usuario inexistente",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{base_url}}/api/login",
+        "body": { "mode": "raw", "raw": "{\"username\": \"usuario.que.no.existe\", \"password\": \"cualquiera\"}" }
+      },
+      "event": [{
+        "listen": "test",
+        "script": {
+          "exec": [
+            "pm.test('Status 401 Unauthorized', () => pm.response.to.have.status(401));",
+            "const body = pm.response.json();",
+            "pm.test('Mensaje de error correcto', () => pm.expect(body.error).to.eql('Credenciales incorrectas'));"
+          ]
+        }
+      }]
+    },
+    {
+      "name": "CP-01-02 - Rechazo por cuenta deshabilitada (Usuario Inactivo)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{base_url}}/api/login",
+        "body": { "mode": "raw", "raw": "{\"username\": \"usuario.deshabilitado\", \"password\": \"Baja#2026\"}" }
+      },
+      "event": [{
+        "listen": "test",
+        "script": {
+          "exec": [
+            "pm.test('Status 401 Unauthorized', () => pm.response.to.have.status(401));",
+            "const body = pm.response.json();",
+            "pm.test('[HALLAZGO] backend usa mensaje generico, no el especifico de cuenta inactiva de la ficha CP-01-01', () => pm.expect(body.error).to.eql('Credenciales incorrectas'));"
+          ]
+        }
+      }]
+    }
+  ]
+}

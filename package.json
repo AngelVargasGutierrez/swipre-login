@@ -6,9 +6,15 @@
   "type": "module",
   "scripts": {
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "start": "node server.js",
+    "test:postman": "newman run postman/swipre-login.postman_collection.json -e postman/swipre-login.postman_environment.json"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
   },
   "devDependencies": {
-    "vitest": "^2.1.5"
+    "vitest": "^2.1.5",
+    "newman": "^6.2.1"
   }
 }
