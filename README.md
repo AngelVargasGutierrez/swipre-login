@@ -8,12 +8,13 @@ Reproduce la lógica real de `backend/controllers/authController.js` y `backend/
 
 - **CP-01-01** (éxito): inicio de sesión exitoso para los 4 roles (Admin, Jefatura, Caja Farmacia, Logística).
 - **CP-01-02** (error): rechazo por contraseña incorrecta, usuario inexistente y cuenta deshabilitada.
+- **CP-01-03** (aceptación): acceso controlado por rol al módulo "Gestión de Usuarios" — HTTP 403 a nivel de servidor para roles no autorizados. Middleware nuevo (`src/authMiddleware.js`), ya que el backend real no tiene ningún control de este tipo todavía.
 - **Hallazgo**: la ficha CP-01-01 documenta un mensaje distinto para cuentas inactivas ("Su cuenta está inactiva...") que el backend actual no implementa (retorna el mismo mensaje genérico que credenciales inválidas).
 
 ## Dos capas de pruebas
 
-- **Unitarias (Vitest)** — `src/authController.js` + `src/userModel.js` probados directamente en memoria.
-- **API (Postman/Newman)** — `server.js` expone la misma lógica como API real (Express); `postman/swipre-login.postman_collection.json` trae las 7 peticiones (4 de CP-01-01, 3 de CP-01-02) con sus propios `pm.test()`, ejecutadas con **Newman** (el CLI de Postman).
+- **Unitarias (Vitest)** — `src/authController.js`, `src/userModel.js` y `src/authMiddleware.js` probados directamente en memoria (11 pruebas).
+- **API (Postman/Newman)** — `server.js` expone la misma lógica como API real (Express); `postman/swipre-login.postman_collection.json` trae las 9 peticiones (4 de CP-01-01, 3 de CP-01-02, 2 de CP-01-03) con sus propios `pm.test()`, ejecutadas con **Newman** (el CLI de Postman).
 
 ## Cómo ejecutar
 
